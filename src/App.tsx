@@ -1,9 +1,16 @@
-import { Button } from "react-bootstrap"
+import { Routes,Route } from "react-router-dom"
 
 function App() {
 
   return (
-    <Button className="m-2 p-3">پروژه وبلاگ</Button>
+    <Routes>
+      <Route path="/" element={<h2>Home Page</h2>}/>
+      <Route path="/add" element={<h2>Add Post</h2>}/>
+      <Route path="/:id">
+      
+      </Route>
+
+    </Routes>
   )
 }
 
