@@ -1,4 +1,5 @@
 import { Form, Stack, Row, Col } from "react-bootstrap";
+import CreatableSelect from "react-select/creatable";
 
 function PostForm() {
   return (
@@ -7,8 +8,14 @@ function PostForm() {
         <Row>
           <Col>
             <Form.Group controlId="title">
-                <Form.Label>عنوان</Form.Label>
-                <Form.Control required/>
+              <Form.Label>عنوان</Form.Label>
+              <Form.Control required />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group>
+              <Form.Label>تگ</Form.Label>
+              <CreatableSelect isMulti placeholder="انتخاب" />
             </Form.Group>
           </Col>
         </Row>
