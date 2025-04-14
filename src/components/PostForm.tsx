@@ -1,4 +1,4 @@
-import { Form, Stack, Row, Col } from "react-bootstrap";
+import { Form, Stack, Row, Col, Button } from "react-bootstrap";
 import CreatableSelect from "react-select/creatable";
 
 function PostForm() {
@@ -13,11 +13,29 @@ function PostForm() {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group>
+            <Form.Group controlId="tag">
               <Form.Label>تگ</Form.Label>
               <CreatableSelect isMulti placeholder="انتخاب" />
             </Form.Group>
           </Col>
+        </Row>
+        <Row>
+          <Form.Group controlId="markdown">
+            <Form.Label>پست</Form.Label>
+            <Form.Control required as={"textarea"} rows={15} />
+          </Form.Group>
+          <Stack
+            direction="horizontal"
+            gap={2}
+            className="justify-content-start"
+          >
+            <Button type="submit" variant="light">
+              انتشار پست
+            </Button>
+            <Button type="button" variant="outline-light">
+              لغو
+            </Button>
+          </Stack>
         </Row>
       </Stack>
     </Form>
