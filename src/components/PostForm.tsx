@@ -2,13 +2,24 @@ import { Form, Stack, Row, Col, Button } from "react-bootstrap";
 import CreatableSelect from "react-select/creatable";
 import { Link } from "react-router-dom";
 import { type FormEvent, useRef } from "react";
+import { type PostData } from "../App";
 
-function PostForm() {
+type PostFormProps = {
+  onSubmit: (data:PostData) => (void)
+}
+
+function PostForm({onSubmit}:PostFormProps) {
   const titleRef = useRef<HTMLInputElement>(null);
   const markdownRef = useRef<HTMLTextAreaElement>(null);
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
+
+    onSubmit({
+      title: titleRef.current!.value,
+      markdown: markdownRef.current!.value,
+      tags: []
+    })
   }
 
   return (

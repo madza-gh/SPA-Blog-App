@@ -2,6 +2,21 @@ import { Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import AddPost from "./components/AddPost";
 
+export type Post ={
+  id: string
+}& PostData
+
+export type PostData={
+  title: string
+  markdown: string
+  tags:Tag[]
+}
+
+export type Tag ={
+  label: string
+  id: string
+}
+
 function App() {
   return (
     <Container className="my-4">
