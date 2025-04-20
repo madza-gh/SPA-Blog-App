@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 import AddPost from "./components/AddPost";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useMemo } from "react";
+import { v4 as uuidV4 } from "uuid";
 
 export type RawPost = {
   id: string;
@@ -29,14 +30,27 @@ function App() {
   const [posts, setPosts] = useLocalStorage<RawPost[]>("POSTS", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
 
-  useMemo(()=>{
-    return posts.map((item)=>{
+  const postsWithTags = useMemo(() => {
+    return posts.map((item) => {
       return {
         ...item,
-        tags: tags.filter((tag)=> item.tagIds.includes(tag.id))
-      }
-    })
-  },[tags,posts])
+        tags: tags.filter((tag) => item.tagIds.includes(tag.id)),
+      };
+    });
+  }, [tags, posts]);
+
+  function onCreatePost({ tags, ...data }: PostData) {
+    setPosts((prevPosts) => {
+      return [
+        ...prevPosts,
+        {
+          ...data,
+          id: uuidV4(),
+          tagIds: tags.map((item) => item.id),
+        },
+      ];
+    });
+  }
 
   return (
     <Container className="my-4">
