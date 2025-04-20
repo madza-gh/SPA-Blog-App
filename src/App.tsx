@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import AddPost from "./components/AddPost";
 import { useLocalStorage } from "./hooks/useLocalStorage";
+import { useMemo } from "react";
 
 export type RawPost = {
   id: string;
@@ -27,6 +28,12 @@ export type Tag = {
 function App() {
   const [posts, setPosts] = useLocalStorage<RawPost[]>("POSTS", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
+
+  useMemo(()=>{
+    return posts.map((item)=>{
+      
+    })
+  },[tags,posts])
 
   return (
     <Container className="my-4">
