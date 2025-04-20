@@ -6,7 +6,7 @@ import { useMemo } from "react";
 
 export type RawPost = {
   id: string;
-} & PostData;
+} & RawPostData;
 
 export type RawPostData = {
   title: string;
@@ -31,7 +31,10 @@ function App() {
 
   useMemo(()=>{
     return posts.map((item)=>{
-      
+      return {
+        ...item,
+        tags: tags.filter((tag)=> item.tagIds.includes(tag.id))
+      }
     })
   },[tags,posts])
 
