@@ -52,11 +52,26 @@ function App() {
     });
   }
 
+  function addTag(tag: Tag) {
+    setTags((prev) => {
+      return [...prev, tag];
+    });
+  }
+
   return (
     <Container className="my-4">
       <Routes>
         <Route path="/" element={<h2>Home Page</h2>} />
-        <Route path="/add" element={<AddPost onSubmit={onCreatePost} />} />
+        <Route
+          path="/add"
+          element={
+            <AddPost
+              onSubmit={onCreatePost}
+              onAddTag={addTag}
+              availableTags={tags}
+            />
+          }
+        />
         <Route path="/:id">
           <Route index element={<h2>View Post</h2>} />
           <Route path="edit" element={<h2>Edit Post</h2>} />

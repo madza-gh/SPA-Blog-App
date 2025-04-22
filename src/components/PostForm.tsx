@@ -3,12 +3,15 @@ import CreatableSelect from "react-select/creatable";
 import { Link } from "react-router-dom";
 import { type FormEvent, useRef, useState } from "react";
 import { type Tag, type PostData } from "../App";
+import { v4 as uuidV4 } from "uuid";
 
 type PostFormProps = {
   onSubmit: (data: PostData) => void;
+  onAddTag: (tag: Tag) => void;
+  availableTags: Tag[];
 };
 
-function PostForm({ onSubmit }: PostFormProps) {
+function PostForm({ onSubmit, onAddTag, availableTags }: PostFormProps) {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
   const titleRef = useRef<HTMLInputElement>(null);
@@ -20,7 +23,7 @@ function PostForm({ onSubmit }: PostFormProps) {
     onSubmit({
       title: titleRef.current!.value,
       markdown: markdownRef.current!.value,
-      tags: [],
+      tags: selectedTags,
     });
   }
 
@@ -38,9 +41,17 @@ function PostForm({ onSubmit }: PostFormProps) {
             <Form.Group controlId="tag">
               <Form.Label>تگ</Form.Label>
               <CreatableSelect
+                onCreateOption={(label) => {
+                  const newTag = { id: uuidV4(), label };
+                  onAddTag(newTag);
+                  setSelectedTags((prev) => [...prev, newTag]);
+                }}
                 isMulti
                 placeholder="انتخاب"
                 value={selectedTags.map((item) => {
+                  return { label: item.label, value: item.id };
+                })}
+                options={availableTags.map((item) => {
                   return { label: item.label, value: item.id };
                 })}
                 onChange={(tags) => {
