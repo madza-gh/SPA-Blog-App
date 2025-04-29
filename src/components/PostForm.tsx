@@ -1,6 +1,6 @@
 import { Form, Stack, Row, Col, Button } from "react-bootstrap";
 import CreatableSelect from "react-select/creatable";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { type FormEvent, useRef, useState } from "react";
 import { type Tag, type PostData } from "../App";
 import { v4 as uuidV4 } from "uuid";
@@ -14,6 +14,8 @@ type PostFormProps = {
 function PostForm({ onSubmit, onAddTag, availableTags }: PostFormProps) {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
+  const navigate = useNavigate();
+
   const titleRef = useRef<HTMLInputElement>(null);
   const markdownRef = useRef<HTMLTextAreaElement>(null);
 
@@ -25,6 +27,8 @@ function PostForm({ onSubmit, onAddTag, availableTags }: PostFormProps) {
       markdown: markdownRef.current!.value,
       tags: selectedTags,
     });
+
+    navigate("..");
   }
 
   return (

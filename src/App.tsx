@@ -4,6 +4,7 @@ import AddPost from "./components/AddPost";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useMemo } from "react";
 import { v4 as uuidV4 } from "uuid";
+import PostList from "./components/PostList";
 
 export type RawPost = {
   id: string;
@@ -61,7 +62,7 @@ function App() {
   return (
     <Container className="my-4">
       <Routes>
-        <Route path="/" element={<h2>Home Page</h2>} />
+        <Route path="/" element={<PostList/>} />
         <Route
           path="/add"
           element={
