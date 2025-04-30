@@ -6,6 +6,10 @@ import { useMemo } from "react";
 import { v4 as uuidV4 } from "uuid";
 import PostList from "./components/PostList";
 
+export type Post ={
+  id: string
+} & PostData
+
 export type RawPost = {
   id: string;
 } & RawPostData;

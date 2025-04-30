@@ -1,16 +1,21 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Row, Col, Button, Stack, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Tag } from "../App";
+import { Tag, Post } from "../App";
 import ReactSelect from "react-select";
 
 type PostListProps = {
   availableTags: Tag[];
+  posts:Post[]
 };
 
-function PostList({ availableTags }: PostListProps) {
+function PostList({ availableTags, posts}: PostListProps) {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [title, setTitle] = useState("");
+  
+  useMemo(()=>{
+
+  },[availableTags, posts, title])
 
   return (
     <>
