@@ -6,9 +6,9 @@ import { useMemo } from "react";
 import { v4 as uuidV4 } from "uuid";
 import PostList from "./components/PostList";
 
-export type Post ={
-  id: string
-} & PostData
+export type Post = {
+  id: string;
+} & PostData;
 
 export type RawPost = {
   id: string;
@@ -66,7 +66,10 @@ function App() {
   return (
     <Container className="my-4">
       <Routes>
-        <Route path="/" element={<PostList availableTags={tags}/>} />
+        <Route
+          path="/"
+          element={<PostList availableTags={tags} posts={postsWithTags} />}
+        />
         <Route
           path="/add"
           element={

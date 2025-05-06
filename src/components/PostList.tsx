@@ -4,16 +4,22 @@ import { Link } from "react-router-dom";
 import { Post, Tag } from "../App";
 import ReactSelect from "react-select";
 
+type PostCardProps = {
+  id: string;
+  tags: Tag[];
+  title: string;
+};
+
 type PostListProps = {
   availableTags: Tag[];
-  posts: Post[];
+  posts: PostCardProps[];
 };
 
 function PostList({ availableTags, posts }: PostListProps) {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [title, setTitle] = useState("");
 
-  useMemo(() => {
+  const filteredPosts = useMemo(() => {
     return posts.filter((item) => {
       return (
         (title === "" ||
@@ -60,8 +66,19 @@ function PostList({ availableTags, posts }: PostListProps) {
           </Col>
         </Row>
       </Form>
+      <Row className="g-3">
+        {filteredPosts.map((item) => (
+          <Col key={item.id}>
+            <PostCard id={item.id} title={item.title} tags={item.tags} />
+          </Col>
+        ))}
+      </Row>
     </>
   );
+}
+
+function PostCard({ id, title, tags }: PostCardProps) {
+  return <div>test</div>;
 }
 
 export default PostList;
