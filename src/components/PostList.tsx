@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Row, Col, Button, Stack, Form } from "react-bootstrap";
+import { Row, Col, Button, Stack, Form, Card, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Post, Tag } from "../App";
 import ReactSelect from "react-select";
@@ -78,7 +78,35 @@ function PostList({ availableTags, posts }: PostListProps) {
 }
 
 function PostCard({ id, title, tags }: PostCardProps) {
-  return <div>test</div>;
+  return (
+    <Card
+      as={Link}
+      to={`/${id}`}
+      className="h-100 text-reset text-decoration-none"
+    >
+      <Card.Body>
+        <Stack
+          gap={2}
+          className="h-100 align-items-center justify-content-center"
+        >
+          <span className="text-black fs-5">{title}</span>
+          {tags.length > 0 && (
+            <Stack
+              gap={1}
+              direction="horizontal"
+              className="flex-wrap justify-content-center"
+            >
+              {tags.map((items) => (
+                <Badge className="text-reuncate" key={items.id}>
+                  {items.label}
+                </Badge>
+              ))}
+            </Stack>
+          )}
+        </Stack>
+      </Card.Body>
+    </Card>
+  );
 }
 
 export default PostList;
