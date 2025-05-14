@@ -5,6 +5,7 @@ import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useMemo } from "react";
 import { v4 as uuidV4 } from "uuid";
 import PostList from "./components/PostList";
+import PostLayout from "./components/PostLayout";
 
 export type Post = {
   id: string;
@@ -80,7 +81,7 @@ function App() {
             />
           }
         />
-        <Route path="/:id">
+        <Route path="/:id" element={<PostLayout posts={postsWithTags}/>}>
           <Route index element={<h2>View Post</h2>} />
           <Route path="edit" element={<h2>Edit Post</h2>} />
         </Route>
