@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import { v4 as uuidV4 } from "uuid";
 import PostList from "./components/PostList";
 import PostLayout from "./components/PostLayout";
+import Post from "./components/Post";
 
 export type Post = {
   id: string;
@@ -81,8 +82,8 @@ function App() {
             />
           }
         />
-        <Route path="/:id" element={<PostLayout posts={postsWithTags}/>}>
-          <Route index element={<h2>View Post</h2>} />
+        <Route path="/:id" element={<PostLayout posts={postsWithTags} />}>
+          <Route index element={<Post />} />
           <Route path="edit" element={<h2>Edit Post</h2>} />
         </Route>
       </Routes>

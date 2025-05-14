@@ -1,19 +1,27 @@
-import { Navigate, useParams, Outlet } from "react-router-dom"
-import { Post } from "../App"
+import {
+  Navigate,
+  useParams,
+  Outlet,
+  useOutletContext,
+} from "react-router-dom";
+import { Post } from "../App";
 
+type PostLayoutProps = {
+  posts: Post[];
+};
 
-type PostLayoutProps ={
-    posts: Post[]
+function PostLayout({ posts }: PostLayoutProps) {
+  const { id } = useParams();
+
+  const post = posts.find((item) => item.id == id);
+
+  if (post == null) return <Navigate to={"./"} replace />;
+
+  return <Outlet context={post} />;
 }
 
-function PostLayout ({posts}:PostLayoutProps){
-    const {id} = useParams()
-
-    const post = posts.find((item)=> item.id == id)
-
-    if(post == null) return <Navigate to={'./'} replace/>
-
-    return <Outlet context={post}/>
+export function usePost() {
+  return useOutletContext<Post>();
 }
 
-export default PostLayout
+export default PostLayout;
