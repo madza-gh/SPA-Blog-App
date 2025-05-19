@@ -7,6 +7,7 @@ import { v4 as uuidV4 } from "uuid";
 import PostList from "./components/PostList";
 import PostLayout from "./components/PostLayout";
 import Post from "./components/Post";
+import EditPost from "./components/EditPost";
 
 export type Post = {
   id: string;
@@ -59,6 +60,18 @@ function App() {
     });
   }
 
+  function onUpdatePost(id: string,{tags, ...data}: PostData){
+    setPosts((prevPosts) => {
+      return prevPosts.map((item)=>{
+        if (item.id === id){
+          return {...item, ...data, tagIds: tags.map((tag)=> tag.id)}
+        }else{
+          return item
+        }
+      })
+    })
+  }
+
   function addTag(tag: Tag) {
     setTags((prev) => {
       return [...prev, tag];
@@ -84,7 +97,16 @@ function App() {
         />
         <Route path="/:id" element={<PostLayout posts={postsWithTags} />}>
           <Route index element={<Post />} />
-          <Route path="edit" element={<h2>Edit Post</h2>} />
+          <Route
+            path="edit"
+            element={
+              <EditPost
+                onSubmit={onUpdatePost}
+                onAddTag={addTag}
+                availableTags={tags}
+              ></EditPost>
+            }
+          />
         </Route>
       </Routes>
     </Container>

@@ -1,0 +1,27 @@
+import { PostData, Tag } from "../App";
+import PostForm from "./PostForm";
+import { usePost } from "./PostLayout";
+
+type EditPostProps = {
+  onSubmit: (id:string, data: PostData) => void;
+  onAddTag: (tag: Tag) => void;
+  availableTags: Tag[];
+};
+
+function EditPost({ onSubmit, onAddTag, availableTags }: EditPostProps) {
+
+  const post = usePost()
+
+  return (
+    <>
+      <h2 className="mb-4">ویرایش پست</h2>
+      <PostForm
+        onSubmit={(data) => onSubmit(post.id, data)}
+        onAddTag={onAddTag}
+        availableTags={availableTags}
+      ></PostForm>
+    </>
+  );
+}
+
+export default EditPost;
