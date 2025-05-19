@@ -4,7 +4,7 @@ import {
   Outlet,
   useOutletContext,
 } from "react-router-dom";
-import { Post } from "../App";
+import { type Post } from "../App";
 
 type PostLayoutProps = {
   posts: Post[];
