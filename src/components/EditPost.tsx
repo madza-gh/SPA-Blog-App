@@ -3,19 +3,21 @@ import PostForm from "./PostForm";
 import { usePost } from "./PostLayout";
 
 type EditPostProps = {
-  onSubmit: (id:string, data: PostData) => void;
+  onSubmit: (id: string, data: PostData) => void;
   onAddTag: (tag: Tag) => void;
   availableTags: Tag[];
 };
 
 function EditPost({ onSubmit, onAddTag, availableTags }: EditPostProps) {
-
-  const post = usePost()
+  const post = usePost();
 
   return (
     <>
       <h2 className="mb-4">ویرایش پست</h2>
       <PostForm
+        title={post.title}
+        markdown={post.markdown}
+        tags={post.tags}
         onSubmit={(data) => onSubmit(post.id, data)}
         onAddTag={onAddTag}
         availableTags={availableTags}

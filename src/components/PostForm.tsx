@@ -9,10 +9,17 @@ type PostFormProps = {
   onSubmit: (data: PostData) => void;
   onAddTag: (tag: Tag) => void;
   availableTags: Tag[];
-};
+} & Partial<PostData>;
 
-function PostForm({ onSubmit, onAddTag, availableTags }: PostFormProps) {
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+function PostForm({
+  onSubmit,
+  onAddTag,
+  availableTags,
+  title = "",
+  markdown = "",
+  tags = [],
+}: PostFormProps) {
+  const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
 
   const navigate = useNavigate();
 
@@ -38,7 +45,7 @@ function PostForm({ onSubmit, onAddTag, availableTags }: PostFormProps) {
           <Col>
             <Form.Group controlId="title">
               <Form.Label>عنوان</Form.Label>
-              <Form.Control ref={titleRef} required />
+              <Form.Control ref={titleRef} required defaultValue={title} />
             </Form.Group>
           </Col>
           <Col>
@@ -78,6 +85,7 @@ function PostForm({ onSubmit, onAddTag, availableTags }: PostFormProps) {
             <Form.Control
               ref={markdownRef}
               required
+              defaultValue={markdown}
               as={"textarea"}
               rows={15}
             />
@@ -85,7 +93,7 @@ function PostForm({ onSubmit, onAddTag, availableTags }: PostFormProps) {
           <Stack
             direction="horizontal"
             gap={2}
-            className="justify-content-start"
+            className="justify-content-start my-4"
           >
             <Button type="submit" variant="light">
               انتشار پست

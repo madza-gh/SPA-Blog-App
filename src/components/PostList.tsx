@@ -51,7 +51,7 @@ function PostList({ availableTags, posts }: PostListProps) {
         </Col>
       </Row>
       <Form>
-        <Row>
+        <Row className="mb-4">
           <Col>
             <Form.Group controlId="title">
               <Form.Label>عنوان</Form.Label>
