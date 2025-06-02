@@ -22,15 +22,24 @@ type PostCardProps = {
 type PostListProps = {
   availableTags: Tag[];
   posts: PostCardProps[];
+  onUpdateTag: (id: string, label: string) => void;
+  onDeleteTag: (id: string) => void;
 };
 
 type EditTagsModalProps = {
   availableTags: Tag[];
   show: boolean;
   handleClose: () => void;
+  onUpdateTag: (id: string, label: string) => void;
+  onDeleteTag: (id: string) => void;
 };
 
-function PostList({ availableTags, posts }: PostListProps) {
+function PostList({
+  availableTags,
+  posts,
+  onUpdateTag,
+  onDeleteTag,
+}: PostListProps) {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [title, setTitle] = useState("");
   const [editTagsModalIsOpen, setEditTagsModalIsOpen] = useState(false);
@@ -62,7 +71,12 @@ function PostList({ availableTags, posts }: PostListProps) {
             <Link to={"/add"}>
               <Button variant="light">افزودن پست</Button>
             </Link>
-            <Button onClick={()=>setEditTagsModalIsOpen(true)} variant="outline-light">ویرایش تگ ها</Button>
+            <Button
+              onClick={() => setEditTagsModalIsOpen(true)}
+              variant="outline-light"
+            >
+              ویرایش تگ ها
+            </Button>
           </Stack>
         </Col>
       </Row>
@@ -94,6 +108,8 @@ function PostList({ availableTags, posts }: PostListProps) {
         show={editTagsModalIsOpen}
         handleClose={() => setEditTagsModalIsOpen(false)}
         availableTags={availableTags}
+        onUpdateTag={onUpdateTag}
+        onDeleteTag={onDeleteTag}
       />
     </>
   );
@@ -135,6 +151,8 @@ function EditTagsModal({
   availableTags,
   show,
   handleClose,
+  onUpdateTag,
+  onDeleteTag,
 }: EditTagsModalProps) {
   return (
     <Modal show={show} onHide={handleClose}>
@@ -147,10 +165,19 @@ function EditTagsModal({
             {availableTags.map((item) => (
               <Row key={item.id}>
                 <Col>
-                  <Form.Control type="text" value={item.label} />
+                  <Form.Control
+                    type="text"
+                    value={item.label}
+                    onChange={(e) => onUpdateTag(item.id, e.target.value)}
+                  />
                 </Col>
                 <Col xs={"auto"}>
-                  <Button variant="outline-none">&times;</Button>
+                  <Button
+                    onClick={() => onDeleteTag(item.id)}
+                    variant="outline-none"
+                  >
+                    &times;
+                  </Button>
                 </Col>
               </Row>
             ))}
