@@ -33,6 +33,7 @@ type EditTagsModalProps = {
 function PostList({ availableTags, posts }: PostListProps) {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [title, setTitle] = useState("");
+  const [editTagsModalIsOpen, setEditTagsModalIsOpen] = useState(false);
 
   const filteredPosts = useMemo(() => {
     return posts.filter((item) => {
@@ -61,7 +62,7 @@ function PostList({ availableTags, posts }: PostListProps) {
             <Link to={"/add"}>
               <Button variant="light">افزودن پست</Button>
             </Link>
-            <Button variant="outline-light">ویرایش تگ ها</Button>
+            <Button onClick={()=>setEditTagsModalIsOpen(true)} variant="outline-light">ویرایش تگ ها</Button>
           </Stack>
         </Col>
       </Row>
@@ -89,7 +90,11 @@ function PostList({ availableTags, posts }: PostListProps) {
         ))}
       </Row>
 
-      <EditTagsModal show={} handleClose={} availableTags={availableTags} />
+      <EditTagsModal
+        show={editTagsModalIsOpen}
+        handleClose={() => setEditTagsModalIsOpen(false)}
+        availableTags={availableTags}
+      />
     </>
   );
 }
@@ -133,7 +138,7 @@ function EditTagsModal({
 }: EditTagsModalProps) {
   return (
     <Modal show={show} onHide={handleClose}>
-      <Modal.Header>
+      <Modal.Header closeButton>
         <Modal.Title>ویرایش تگ ها</Modal.Title>
       </Modal.Header>
       <Modal.Body>
