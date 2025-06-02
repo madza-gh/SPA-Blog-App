@@ -78,6 +78,12 @@ function App() {
     });
   }
 
+  function onDeletePost(id:string){
+    setPosts((prevPosts)=>{
+      return prevPosts.filter((item)=> item.id !== id)
+    })
+  }
+
   return (
     <Container className="my-4">
       <Routes>
@@ -96,7 +102,7 @@ function App() {
           }
         />
         <Route path="/:id" element={<PostLayout posts={postsWithTags} />}>
-          <Route index element={<Post />} />
+          <Route index element={<Post onDelete={onDeletePost}/>} />
           <Route
             path="edit"
             element={

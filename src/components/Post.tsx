@@ -1,10 +1,15 @@
 import { usePost } from "./PostLayout";
 import { Col, Row, Badge, Stack, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import ReactMarkdown from 'react-markdown'
+import { Link, useNavigate } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
-function Post() {
+type PostProps = {
+  onDelete: (id: string) => void;
+};
+
+function Post({ onDelete }: PostProps) {
   const post = usePost();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -26,7 +31,19 @@ function Post() {
             <Link to={`/${post.id}/edit`}>
               <Button variant="light">ویرایش</Button>
             </Link>
-            <Button variant="outline-light">حذف</Button>
+            <Button
+              variant="outline-light"
+              onClick={async () => {
+                try {
+                  await onDelete(post.id);
+                  navigate("/");
+                } catch (error) {
+                  console.error("Failed to delete post:", error);
+                }
+              }}
+            >
+              حذف
+            </Button>
             <Link to={"/"}>
               <Button variant="outline-light">بازگشت</Button>
             </Link>
