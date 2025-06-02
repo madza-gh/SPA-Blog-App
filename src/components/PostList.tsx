@@ -1,5 +1,14 @@
 import { useMemo, useState } from "react";
-import { Row, Col, Button, Stack, Form, Card, Badge } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Button,
+  Stack,
+  Form,
+  Card,
+  Badge,
+  Modal,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Post, Tag } from "../App";
 import ReactSelect from "react-select";
@@ -13,6 +22,12 @@ type PostCardProps = {
 type PostListProps = {
   availableTags: Tag[];
   posts: PostCardProps[];
+};
+
+type EditTagsModalProps = {
+  availableTags: Tag[];
+  show: boolean;
+  handleClose: () => void;
 };
 
 function PostList({ availableTags, posts }: PostListProps) {
@@ -66,13 +81,15 @@ function PostList({ availableTags, posts }: PostListProps) {
           </Col>
         </Row>
       </Form>
-      <Row className="g-3">
+      <Row xs={1} md={2} lg={3} xl={4} className="g-3">
         {filteredPosts.map((item) => (
           <Col key={item.id}>
             <PostCard id={item.id} title={item.title} tags={item.tags} />
           </Col>
         ))}
       </Row>
+
+      <EditTagsModal show={} handleClose={} availableTags={availableTags} />
     </>
   );
 }
@@ -106,6 +123,36 @@ function PostCard({ id, title, tags }: PostCardProps) {
         </Stack>
       </Card.Body>
     </Card>
+  );
+}
+
+function EditTagsModal({
+  availableTags,
+  show,
+  handleClose,
+}: EditTagsModalProps) {
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header>
+        <Modal.Title>ویرایش تگ ها</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Stack gap={2}>
+            {availableTags.map((item) => (
+              <Row key={item.id}>
+                <Col>
+                  <Form.Control type="text" value={item.label} />
+                </Col>
+                <Col xs={"auto"}>
+                  <Button variant="outline-none">&times;</Button>
+                </Col>
+              </Row>
+            ))}
+          </Stack>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
 }
 
