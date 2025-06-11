@@ -10,7 +10,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Post, Tag } from "../App";
+import { Tag } from "../App";
 import ReactSelect from "react-select";
 
 type PostCardProps = {
@@ -51,13 +51,11 @@ function PostList({
           item.title.toLowerCase().includes(title.toLowerCase())) &&
         (selectedTags.length === 0 ||
           selectedTags.every((tag) =>
-            item.tags.some((postTag) => {
-              postTag.id === tag.id;
-            })
+            item.tags.some((postTag) => postTag.id === tag.id)
           ))
       );
     });
-  }, [posts, availableTags, title]);
+  }, [posts, availableTags, title, selectedTags]);
 
   return (
     <>
@@ -91,6 +89,28 @@ function PostList({
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="tag">
+              <Form.Label>تگ</Form.Label>
+              <ReactSelect
+                value={selectedTags.map((item) => {
+                  return { label: item.label, value: item.id };
+                })}
+                options={availableTags.map((item) => {
+                  return { label: item.label, value: item.id };
+                })}
+                onChange={(tags) => {
+                  setSelectedTags(
+                    (tags || []).map((item) => {
+                      return { label: item.label, id: item.value };
+                    })
+                  );
+                }}
+                isMulti
+                placeholder="انتخاب"
               />
             </Form.Group>
           </Col>
